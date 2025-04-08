@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUS PASS | PORTAL</title>
+    <link rel="stylesheet" href="{% static 'css/studentregistration.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Additional styles */
+        .highlighted-email {
+            color: #007bff;
+            /* Bootstrap primary color */
+            font-weight: bold;
+            margin-left: auto;
+            /* Ensure it aligns to the right */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccc;
+            margin-top: auto;
+            /* Push footer to the bottom */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .navbar img {
+            width: 50px;
+            /* Adjust size as needed */
+            margin-right: 20px;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .navbar .home,
+        .navbar .logout {
+            margin-left: auto;
+            text-decoration: none;
+            color: #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+        }
+
+        .navbar .logout {
+            display: flex;
+            align-items: center;
+            /* Center icon and text vertically */
+            background-color: #e2e6ea;
+            /* Light background for the logout button */
+        }
+
+        .navbar .logout:hover {
+            background-color: #d6d8db;
+            /* Darker on hover */
+        }
+
+        .welcome-message {
+            margin-left: 20px;
+            /* Aligns to the right */
+            padding-left: 20px;
+            /* Spacing from the home link */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            /* Space buttons evenly */
+            margin-top: 40px;
+            /* Spacing above buttons */
+        }
+
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 120px;
+            /* Adjust button width */
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            background-color: #e2e6ea;
+        }
+
+        .button i {
+            font-size: 24px;
+            /* Icon size */
+            margin-bottom: 10px;
+            /* Space between icon and text */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <img src="{% static 'img/CBIT3.JPG' %}" alt="Smart Bus Pass" class="navbar-icon">
+        <h2 class="navbar-title"><a href="{% url 'base' %}">SMART BUS PASS</a></h2>
+        <a href="{% url 'userhome' %}" class="home">HOME</a>
+        <div class="welcome-message">
+            {% if user_name %}
+            <span class="highlighted-email">Welcome, {{ user_name }}!</span><br>
+            <span>{{ user_email }}</span>
+            {% endif %}
+        </div>
+        {% if user_name %}
+        <a href="{%url 'logoutfun'%}" class="logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        {% endif %}
+    </div>
+    <div class="container mt-4" style="flex-grow: 1; text-align: center;">
+        <h2>Choose an Action</h2>
+        <div class="button-container">
+            <a href="{%url 'create_applicant'%}" class="button">
+                <i class="fas fa-bus"></i>
+                Apply Bus Pass
+            </a>
+
+            <a href="{% url 'search_bus_pass' %}" class="button">
+                <i class="fas fa-print"></i>
+                Print Application
+            </a>
+
+
+        </div>
+    </div>
+    {%block contents%}
+    {%endblock%}
+
+
+    <footer class="footer">
+        <span>&copy; Smart Bus Pass. All rights reserved.</span>
+    </footer>
+
+</body>
+
+</html>

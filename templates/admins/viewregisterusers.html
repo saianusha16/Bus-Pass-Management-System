@@ -1,0 +1,549 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registred Users</title>
+  <link rel="stylesheet" href="{% static 'css/studentregistration.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Main Section Styling */
+
+    /* Additional styles */
+    .highlighted-email {
+      color: #007bff;
+      font-weight: bold;
+      margin-left: auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-top: 1px solid #ccc;
+      margin-top: auto;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      background-color: #f8f9fa;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .navbar img {
+      width: 50px;
+      margin-right: 20px;
+    }
+
+    .navbar-title {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .navbar .home,
+    .navbar .logout {
+      margin-left: auto;
+      text-decoration: none;
+      color: #007bff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .navbar .logout {
+      display: flex;
+      align-items: center;
+      background-color: #e2e6ea;
+    }
+
+    .navbar .logout:hover {
+      background-color: #d6d8db;
+    }
+
+    .welcome-message {
+      margin-left: 20px;
+      padding-left: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+    }
+
+    .button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #333;
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 120px;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .button:hover {
+      background-color: #e2e6ea;
+    }
+
+    .button i {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .we-do {
+      padding: 50px 0;
+      background-color: #f4f4f9;
+    }
+
+    .we-do-details {
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-header h2 {
+      font-size: 36px;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: #666;
+    }
+
+    /* Styling for the search bar */
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .search-bar form {
+      display: flex;
+      border: 2px solid #17a2b8;
+      border-radius: 20px;
+      padding: 5px;
+      background-color: #f8f9fa;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-bar input {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      width: 250px;
+      margin-right: 10px;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .search-bar input:focus {
+      border-color: #17a2b8;
+      box-shadow: 0 0 10px rgba(23, 162, 184, 0.5);
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      background-color: #17a2b8;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
+      background-color: #138496;
+    }
+
+    /* Styling for the table */
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table th,
+    table td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+
+    table th {
+      background-color: #2a5298;
+      color: white;
+      font-weight: bold;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #bdb76b;
+      /* Light Yellow */
+    }
+
+    table tr:hover {
+      background-color: #17a2b8;
+      /* Light Gray */
+    }
+
+    .status-waiting {
+      color: #ffc107;
+    }
+
+    .status-activated {
+      color: #28a745;
+    }
+
+    .status-blocked {
+      color: #dc3545;
+    }
+
+    /* Add custom styles for pagination */
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      padding: 8px 16px;
+      margin: 0 5px;
+      border-radius: 5px;
+      background-color: #17a2b8;
+      color: white;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+      background-color: #138496;
+    }
+
+    .pagination a.disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .pagination a.active {
+      background-color: #0056b3;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* Activate Button Styling */
+    .btn-activate {
+      background-color: #28a745;
+      color: white;
+      border: 2px solid #218838;
+    }
+
+    .btn-activate:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+      transform: scale(1.05);
+    }
+
+    /* Block Button Styling */
+    .btn-block {
+      background-color: #dc3545;
+      color: white;
+      border: 2px solid #c82333;
+    }
+
+    .btn-block:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+      transform: scale(1.05);
+    }
+
+    /* Unblock Button Styling */
+    .btn-unblock {
+      background-color: #ffc107;
+      color: white;
+      border: 2px solid #e0a800;
+    }
+
+    .btn-unblock:hover {
+      background-color: #e0a800;
+      border-color: #d39e00;
+      transform: scale(1.05);
+    }
+
+    /* Active Button State - Applied when a button is clicked or active */
+    .btn:active {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-waiting {
+      color: #ffc107;
+      /* Yellow for waiting */
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .status-activated {
+      color: #28a745;
+      /* Green for activated */
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .status-blocked {
+      color: #dc3545;
+      /* Red for blocked */
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* Hover effect on status */
+    .status-waiting:hover {
+      background-color: #ffe066;
+      cursor: pointer;
+    }
+
+    .status-activated:hover {
+      background-color: #66d96f;
+      cursor: pointer;
+    }
+
+    .status-blocked:hover {
+      background-color: #f8d7da;
+      cursor: pointer;
+    }
+
+    /* Focus effect (when status is clicked or focused) */
+    .status-waiting:focus {
+      outline: 2px solid #ffc107;
+    }
+
+    .status-activated:focus {
+      outline: 2px solid #28a745;
+    }
+
+    .status-blocked:focus {
+      outline: 2px solid #dc3545;
+    }
+
+
+    .btn-link {
+      color: #1e90ff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn-link:hover {
+      background-color: #e0f7fa;
+      color: #00796b;
+    }
+
+    .bg-light {
+      background-color: #f1f1f1;
+      border-radius: 8px;
+    }
+
+    .bg-light th,
+    .bg-light td {
+      border: 1px solid #ddd;
+    }
+
+    .section-header p {
+      margin-top: 15px;
+    }
+
+    .highlight-status {
+      background-color: #ffeb3b;
+      /* Bright yellow background */
+      color: #000;
+      /* Black text for better readability */
+      font-weight: bold;
+      /* Make the text bold */
+    }
+
+
+    /* Additional styling */
+    .messages {
+      margin: 20px auto;
+      padding: 15px;
+      width: 80%;
+      border-radius: 5px;
+      
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 5px solid;
+    }
+
+    .message.success {
+      border-color: #28a745;
+      
+      color: #155724;
+    }
+
+    .message.warning {
+      border-color: #ffc107;
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .message.error {
+      border-color: #dc3545;
+      
+      color: #721c24;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <img src="{% static 'img/CBIT3.JPG' %}" alt="Smart Bus Pass" class="navbar-icon">
+    <h2 class="navbar-title"><a href="{% url 'base' %}">SMART BUS PASS</a></h2>
+    <!-- <a href="{% url 'base' %}" class="home">HOME</a> -->
+    <div class="welcome-message">
+      {% if user_name %}
+      <span class="highlighted-email">Welcome, {{ user_name }}!</span><br>
+      {% else %}
+      <span>Please log in</span>
+      {% endif %}
+    </div>
+
+    <a href="{% url 'logoutfun' %}" class="logout">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+
+  </div>
+
+  <!-- Messages Section -->
+  <!-- Messages Section -->
+  <div class="messages">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="container mt-4" style="flex-grow: 1; text-align: center;">
+
+
+
+    <div class="button-container">
+      <a href="{%url 'AdminHome'%}" class="button">
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+      <a href="{% url 'RegisterUsersView' %}" class="button">
+        <i class="fas fa fa-address-card"></i>
+        Registred Users
+      </a>
+
+      <a href="{%url 'add_route'%}" class="button">
+        <i class="fas fa-route "></i>
+        Add Routes
+      </a>
+      <a href="{%url 'viewroutes'%}" class="button">
+        <i class="fas fa-list "></i>
+        ROUTES LIST
+      </a>
+      <a href="{%url 'bus_pass_applied_users'%}" class="button">
+        <i class="fas fa-list "></i>
+        Bus Pass Applications
+      </a>
+
+
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Move the search bar here -->
+    <div class="search-bar">
+      <form method="GET" action="{% url 'RegisterUsersView' %}">
+        <input type="text" name="search" placeholder="Search by name, email, or mobile" value="{{ search_query }}">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>S.NO</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.email }}</td>
+          <td>{{ i.mobile }}</td>
+          <td>
+            {% if i.status == 'waiting' %}
+            <span class="status-waiting">Waiting</span>
+            {% elif i.status == 'activated' %}
+            <span class="status-activated">Activated</span>
+            {% elif i.status == 'blocked' %}
+            <span class="status-blocked">Blocked</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if i.status == 'waiting' %}
+            <a href="{% url 'activate_user' %}?uid={{ i.id }}" class="btn btn-activate">Activate</a>
+            {% elif i.status == 'activated' %}
+            <a href="{% url 'BlockUser' %}?uid={{ i.id }}" class="btn btn-block">Block</a>
+            {% elif i.status == 'blocked' %}
+            <a href="{% url 'UnblockUser' %}?uid={{ i.id }}" class="btn btn-unblock">Unblock</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  </div><!--/.section-header-->
+  </div><!--/.we-do-details-->
+  </div><!--/.container-->
+  </section><!--/.we-do-->
+
+  <footer class="footer">
+    <span>&copy; Smart Bus Pass. All rights reserved.</span>
+  </footer>
+
+</body>
+
+</html>

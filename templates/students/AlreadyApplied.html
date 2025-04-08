@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUS PASS | PORTAL</title>
+    <link rel="stylesheet" href="{% static 'css/studentregistration.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .highlighted-email {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccc;
+            margin-top: auto;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .navbar img {
+            width: 50px;
+            margin-right: 20px;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .navbar .home,
+        .navbar .logout {
+            margin-left: auto;
+            text-decoration: none;
+            color: #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .logout {
+            display: flex;
+            align-items: center;
+            background-color: #e2e6ea;
+        }
+
+        .navbar .logout:hover {
+            background-color: #d6d8db;
+        }
+
+        .welcome-message {
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        /* Button container */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 120px;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            background-color: #e2e6ea;
+        }
+
+        .button i {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Status Container Styles */
+        .status-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .status-container h1 {
+            font-size: 2rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .status-container p {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .status-container .highlight {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .status-container .renewal-date {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Animation */
+        .status-container {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <img src="{% static 'img/CBIT3.JPG' %}" alt="Smart Bus Pass" class="navbar-icon">
+        <h2 class="navbar-title"><a href="{% url 'base' %}">SMART BUS PASS</a></h2>
+        <a href="{% url 'userhome' %}" class="home">HOME</a>
+        <div class="welcome-message">
+            {% if user_name %}
+                <span class="highlighted-email">Welcome, {{ user_name }}!</span><br>
+                <span>{{ user_email }}</span>
+            {% endif %}
+        </div>
+        {% if user_name %}
+            <a href="{% url 'logoutfun' %}" class="logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Status Container for Already Applied -->
+    <div class="status-container">
+        <h1>Hello, {{ user_name }}!</h1>
+        <p>You have already applied for a bus pass.</p>
+        <p><span class="highlight">Application Number:</span> {{ application_number }}</p>
+        <p><span class="renewal-date">Renewal Date:</span> {{ renewal_date }}</p>
+    </div>
+
+    <div class="container mt-4" style="flex-grow: 1; text-align: center;">
+        <h2>Choose an Action</h2>
+        <div class="button-container">
+            <a href="{% url 'create_applicant' %}" class="button">
+                <i class="fas fa-bus"></i>
+                Renewal Bus Pass
+            </a>
+
+            <a href="{% url 'search_bus_pass' %}" class="button">
+                <i class="fas fa-print"></i>
+                Print Bus pass
+            </a>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <span>&copy; Smart Bus Pass. All rights reserved.</span>
+    </footer>
+
+</body>
+
+</html>

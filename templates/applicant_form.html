@@ -1,0 +1,376 @@
+{% extends 'UserHomePage.html' %}
+{% block contents %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART BUS PASS APPLICATION</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <!-- FontAwesome CDN for the down arrow icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f4f6ff;
+        }
+
+        .header {
+            background-color: #dbe5ff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .header h2 {
+            color: #0033cc;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .header h4 {
+            color: #000;
+            margin: 0;
+        }
+
+        .applicant-details {
+            margin-top: 20px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            padding-right: 10px;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            font-size: 1rem;
+            padding: 8px;
+            height: calc(1.5em + 0.75rem + 2px);
+        }
+
+        .row .col-md-6 {
+            padding: 0 10px;
+        }
+
+        .btn-primary {
+            background-color: #0033cc;
+            border-color: #0033cc;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-heading {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0033cc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dropdown-container {
+            position: relative;
+            /* Ensures the container positions child elements relative to itself */
+        }
+
+        .dropdown-container select {
+            width: 100%;
+            padding-right: 2rem;
+            /* Creates space for the arrow */
+        }
+
+        .dropdown-arrow {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            /* Positions arrow inside the dropdown */
+            transform: translateY(-50%);
+            pointer-events: none;
+            /* Allows clicks to pass through to the dropdown */
+            font-size: 1rem;
+            color: #0033cc;
+        }
+
+        .form-control {
+            padding-right: 30px;
+        }
+
+        select {
+            width: 100%;
+            /* Ensure it takes the full width of its container */
+            box-sizing: border-box;
+            /* Ensure padding and border are included in the element's width and height */
+            display: inline-block;
+            /* Keeps it aligned within the form */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="icon">&#128652;</span>
+            <h2>Django Road Transportation</h2>
+            <h4>SMART BUS PASS APPLICATION</h4>
+        </div>
+
+        <!-- Applicant Details Heading -->
+        <div class="form-heading">
+            <h3>Applicant Details</h3>
+        </div>
+
+        <div class="applicant-details">
+            {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-container">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <!-- Name Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="{{ form.name.value|default:user_name }}" readonly>
+                            {% if form.name.errors %}
+                            <div class="text-danger">
+                                {% for error in form.name.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- WhatsApp Number Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="whatsapp_no">Mobile</label>
+                            <input type="text" class="form-control" id="whatsapp_no" name="mobile"
+                                value="{{ form.whatsapp_no.value|default:user_mobile }}" readonly>
+                            {% if form.mobile.errors %}
+                            <div class="text-danger">
+                                {% for error in form.mobile.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Email Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="{{ form.email.value|default:user_email }}" readonly>
+                            {% if form.email.errors %}
+                            <div class="text-danger">
+                                {% for error in form.email.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Father/Guardian Name Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="father_guardian_name">Father/Guardian Name</label>
+                            <input type="text" class="form-control" id="father_guardian_name"
+                                name="father_guardian_name" value="{{ form.father_guardian_name.value|default:'' }}"
+                                placeholder="Enter Father's Name">
+                            {% if form.father_guardian_name.errors %}
+                            <div class="text-danger">
+                                {% for error in form.father_guardian_name.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Date of Birth Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="date_of_birth">Date of Birth</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                value="{{ form.date_of_birth.value|default:'' }}" onchange="calculateAge()">
+                            {% if form.date_of_birth.errors %}
+                            <div class="text-danger">
+                                {% for error in form.date_of_birth.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Age Display Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="age">Age</label>
+                            <input type="text" class="form-control" id="age" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Gender Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="gender">Gender</label>
+                            <div class="dropdown-container">
+                                <select class="form-control" id="gender" name="gender">
+                                    <option value="" disabled selected>Choose Gender</option>
+                                    <option value="Male" {% if form.gender.value == "Male" %}selected{% endif %}>Male
+                                    </option>
+                                    <option value="Female" {% if form.gender.value == "Female" %}selected{% endif %}>
+                                        Female</option>
+                                    <option value="Trans" {% if form.gender.value == "Trans" %}selected{% endif %}>Trans
+                                    </option>
+                                </select>
+                                <span class="fa fa-chevron-down dropdown-arrow"></span>
+                            </div>
+                            {% if form.gender.errors %}
+                            <div class="text-danger">
+                                {% for error in form.gender.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Aadhaar Number Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="aadhaar_no">Aadhaar Number</label>
+                            <input type="text" class="form-control" id="aadhaar_no" name="aadhaar_no"
+                                value="{{ form.aadhaar_no.value|default:'' }}" placeholder="Enter Aadhaar Number">
+                            {% if form.aadhaar_no.errors %}
+                            <div class="text-danger">
+                                {% for error in form.aadhaar_no.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="photo">Upload Photo</label>
+                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                        {% if form.photo.errors %}
+                        <div class="text-danger">
+                            {% for error in form.photo.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <!-- Address Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                value="{{ form.address.value|default:'' }}" placeholder="Enter address">
+                            {% if form.address.errors %}
+                            <div class="text-danger">
+                                {% for error in form.address.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- District Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="district">District</label>
+                            <input type="text" class="form-control" id="district" name="district"
+                                value="{{ form.district.value|default:'' }}" placeholder="Enter district">
+                            {% if form.district.errors %}
+                            <div class="text-danger">
+                                {% for error in form.district.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- village Field -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="village">City</label>
+                            <input type="text" class="form-control" id="village" name="village"
+                                value="{{ form.village.value|default:'' }}" placeholder="Enter City">
+                            {% if form.village.errors %}
+                            <div class="text-danger">
+                                {% for error in form.village.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <!-- ----pincode---- -->
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="pincode">Pincode</label>
+                            <input type="text" class="form-control" id="pincode" name="pincode"
+                                value="{{ form.pincode.value|default:'' }}" placeholder="Enter Pincode">
+                            {% if form.pincode.errors %}
+                            <div class="text-danger">
+                                {% for error in form.pincode.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function calculateAge() {
+            var dob = document.getElementById('date_of_birth').value;
+            var today = new Date();
+            var birthDate = new Date(dob);
+
+            var ageYears = today.getFullYear() - birthDate.getFullYear();
+            var ageMonths = today.getMonth() - birthDate.getMonth();
+            var ageDays = today.getDate() - birthDate.getDate();
+
+            // Adjust for negative values in months or days
+            if (ageDays < 0) {
+                ageMonths--;
+                var daysInPrevMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // Days in the previous month
+                ageDays += daysInPrevMonth;
+            }
+
+            if (ageMonths < 0) {
+                ageYears--;
+                ageMonths += 12;
+            }
+
+            // Display age in Years, Months, and Days format
+            document.getElementById('age').value = ageYears + " Years, " + ageMonths + " Months, " + ageDays + " Days";
+        }
+    </script>
+</body>
+
+</html>
+{% endblock %}

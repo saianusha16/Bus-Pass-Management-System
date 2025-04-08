@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey Ticket Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+        .ticket-container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            margin: auto;
+            background-color: #fff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        <div class="header">Onward Journey Ticket Details</div>
+
+        <!-- Route Details -->
+        <table>
+            <tr>
+                <th>From City</th>
+                <td>{{ route.start_point }}</td>
+                <th>To City</th>
+                <td>{{ route.end_point }}</td>
+            </tr>
+            <tr>
+                <th>Date of Journey</th>
+                <td>{{ route.date_of_journey }}</td>
+                <th>Departure Time</th>
+                <td>{{ route.departure_time }}</td>
+            </tr>
+            <tr>
+                <th>Service Code/Name</th>
+                <td>{{ route.service_code }}</td>
+                <th>Service Category</th>
+                <td>{{ route.service_category }}</td>
+            </tr>
+            <tr>
+                <th>Total Distance</th>
+                <td>{{ route.distance }} KM</td>
+                <th>Total Fare</th>
+                <td>₹{{ route.fare }}</td>
+            </tr>
+        </table>
+
+        <!-- Applicant Details -->
+        <div class="header">Applicant Details</div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <td>{{ applicant.name }}</td>
+                <th>Gender</th>
+                <td>{{ applicant.gender }}</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ applicant.date_of_birth }}</td>
+                <th>Aadhaar Number</th>
+                <td>{{ applicant.aadhaar_no }}</td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td>{{ applicant.mobile }}</td>
+                <th>Email</th>
+                <td>{{ applicant.email }}</td>
+            </tr>
+        </table>
+
+        <!-- Residential Address -->
+        <div class="header">Residential Address</div>
+        <table>
+            <tr>
+                <th>Address</th>
+                <td>{{ address.address }}</td>
+                <th>Village</th>
+                <td>{{ address.village }}</td>
+            </tr>
+            <tr>
+                <th>District</th>
+                <td>{{ address.district }}</td>
+                <th>Pincode</th>
+                <td>{{ address.pincode }}</td>
+            </tr>
+        </table>
+
+        <!-- Status -->
+        <div class="header highlight">Status: PAYMENT PENDING</div>
+    </div>
+</body>
+</html>

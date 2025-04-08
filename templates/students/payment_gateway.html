@@ -1,0 +1,92 @@
+<div style="display: flex; width: 100%; max-width: 900px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #f4f7fc;">
+    <!-- Sidebar for Payment Options -->
+    <div style="width: 30%; padding: 20px; border-right: 1px solid #ddd; background-color: #ffffff; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+        <h3 style="font-size: 22px; color: #333; font-weight: bold;">Payment Options</h3>
+        <ul style="list-style-type: none; padding: 0; margin-top: 20px;">
+            <li style="margin: 15px 0;">
+                <button onclick="showForm('upi')" style="width: 100%; padding: 15px; font-size: 18px; color: white; background-color: #007bff; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease;">
+                    <strong>UPI</strong>
+                </button>
+            </li>
+            <li style="margin: 15px 0;">
+                <button onclick="showForm('debit_card')" style="width: 100%; padding: 15px; font-size: 18px; color: white; background-color: #28a745; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease;">
+                    <strong>Debit Card</strong>
+                </button>
+            </li>
+            <li style="margin: 15px 0;">
+                <button onclick="showForm('credit_card')" style="width: 100%; padding: 15px; font-size: 18px; color: white; background-color: #ffc107; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease;">
+                    <strong>Credit Card</strong>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Payment Form Section -->
+    <div style="width: 70%; padding: 20px; background-color: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-radius: 10px; margin-left: 20px;">
+        <h3 style="font-size: 22px; color: #333; font-weight: bold;">Select a payment option from the left.</h3>
+        <div id="paymentForm" style="margin-top: 20px;">
+            <!-- The selected payment form will be displayed here -->
+        </div>
+
+        <!-- Display Total Amount -->
+        <div style="margin-top: 30px; padding: 20px; background-color: #f7f7f7; border-radius: 10px; text-align: center;">
+            <h4 style="font-size: 24px; color: #333;">Total Amount to Pay</h4>
+            <h2 style="font-size: 36px; color: #28a745; font-weight: bold;">₹{{ route_selection.fare_amount }}</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showForm(option) {
+        let formHtml = '';
+        if (option === 'upi') {
+            formHtml = `
+                <h3 style="font-size: 18px; color: #333; font-weight: bold;">UPI Payment</h3>
+                <form method="POST" style="background-color: #f8f9fa; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                    {% csrf_token %}
+                    <label for="upi_id" style="font-size: 16px; color: #555;">UPI ID:</label>
+                    <input type="text" name="upi_id" id="upi_id" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="hidden" name="payment_option" value="upi">
+                    <button type="submit" style="width: 100%; padding: 15px; font-size: 18px; color: white; background-color: #007bff; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; transition: background-color 0.3s;">
+                        <strong>Pay Now</strong>
+                    </button>
+                </form>
+            `;
+        } else if (option === 'debit_card') {
+            formHtml = `
+                <h3 style="font-size: 18px; color: #333; font-weight: bold;">Debit Card Payment</h3>
+                <form method="POST" style="background-color: #f8f9fa; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                    {% csrf_token %}
+                    <label for="card_number" style="font-size: 16px; color: #555;">Card Number:</label>
+                    <input type="text" name="card_number" id="card_number" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <label for="expiry_date" style="font-size: 16px; color: #555; margin-top: 20px;">Expiry Date:</label>
+                    <input type="text" name="expiry_date" id="expiry_date" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <label for="cvv" style="font-size: 16px; color: #555; margin-top: 20px;">CVV:</label>
+                    <input type="text" name="cvv" id="cvv" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="hidden" name="payment_option" value="debit_card">
+                    <button type="submit" style="width: 100%; padding: 15px; font-size: 18px; color: white; background-color: #28a745; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; transition: background-color 0.3s;">
+                        <strong>Pay Now</strong>
+                    </button>
+                </form>
+            `;
+        } else if (option === 'credit_card') {
+            formHtml = `
+                <h3 style="font-size: 18px; color: #333; font-weight: bold;">Credit Card Payment</h3>
+                <form method="POST" style="background-color: #f8f9fa; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                    {% csrf_token %}
+                    <label for="card_number" style="font-size: 16px; color: #555;">Card Number:</label>
+                    <input type="text" name="card_number" id="card_number" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <label for="expiry_date" style="font-size: 16px; color: #555; margin-top: 20px;">Expiry Date:</label>
+                    <input type="text" name="expiry_date" id="expiry_date" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <label for="cvv" style="font-size: 16px; color: #555; margin-top: 20px;">CVV:</label>
+                    <input type="text" name="cvv" id="cvv" required style="width: 100%; padding: 15px; margin-top: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="hidden" name="payment_option" value="credit_card">
+                    <button type="submit" style="width: 100%; padding: 15px; font-size: 18px; color: white; background-color: #ffc107; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; transition: background-color 0.3s;">
+                        <strong>Pay Now</strong>
+                    </button>
+                </form>
+            `;
+        }
+        document.getElementById('paymentForm').innerHTML = formHtml;
+    }
+</script>

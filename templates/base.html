@@ -1,0 +1,268 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Smart Bus Pass | Main Page</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{%static 'img/favicon.png'%}" rel="icon">
+  <link href="{%static 'img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{%static 'vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/remixicon/remixicon.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{%static 'css/style.css'%}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Gp
+  * Updated: Mar 13 2024 with Bootstrap v5.3.3
+  * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    #hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 0;
+
+    }
+
+    .pass-container {
+      display: flex;
+      padding-right: 500px;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .pass-box {
+      /*background-color: rgba(185, 231, 227, 0.3);*/
+      /* Adjust the alpha value (0 to 1) for transparency */
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      flex: 1;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .fa-pencil-square-o {
+      font-size: 38px;
+      color: #9932CC; /* Purple color for the icon */
+      position: relative;
+      padding: 10px;
+      background: #eee; /* Light grey background to make the highlight stand out */
+      border-radius: 50%; /* Rounded background */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Dark shadow for 3D effect */
+  }
+
+
+    .pass-logo {
+      width: 300px;
+      height: auto;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 2rem;
+
+      overflow: hidden;
+    }
+
+    .pass-logo span {
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Optional: semi-transparent background for text readability */
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .pass-box p {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    .pass-box a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+
+    #student {
+      color: #00ff00;
+      font-family: Arial, sans-serif;
+      /* Replace with your preferred font family */
+      font-size: 30px;
+      font-weight: bold;
+      /* Apply bold weight */
+      animation: mymove 2s infinite;
+    }
+
+    #citizen {
+      color: #00ff00;
+      font-family: Arial, sans-serif;
+      /* Replace with your preferred font family */
+      font-size: 30px;
+      font-weight: bold;
+      /* Apply bold weight */
+      animation: move 1s infinite;
+    }
+
+    @keyframes mymove {
+      0% {
+        color: #00ff00;
+        opacity: 0;
+      }
+
+      /* Start color */
+      100% {
+        color: red;
+        opacity: 1;
+      }
+
+      /* End color */
+
+    }
+
+    @keyframes move {
+      0% {
+        color: #4b063a;
+        opacity: 0;
+      }
+
+      /* Start color */
+      100% {
+        color: rgb(226, 25, 25);
+        opacity: 1;
+      }
+
+      /* End color */
+    }
+
+    /* Adjust responsiveness for smaller screens */
+    @media (max-width: 768px) {
+      #hero {
+        flex-direction: column;
+      }
+
+      .pass-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+
+      <h1 class="logo " style='color:white;'><img src="{% static 'img/CBIT-LOGO.png' %}" alt="Logo"
+          class="img-fluid">Smart Bus Pass</h1>
+          <!-- class="brand-text text-primary ms-1">Smart Bus Pass</h1> -->
+
+          
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="#" class="logo me-auto me-lg-0"><img src="../static/img/logo.png" alt="" class="img-fluid"></a> -->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+         
+          <!-- <li><a class="nav-link scrollto" href="#services">Mangement</a></li> -->
+          <!-- <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li> -->
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+     
+      <a href="{%url 'AdminLogin'%}" class="get-started-btn scrollto">Admin Login</a>
+
+    </div>
+  </header><!-- End Header -->
+
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="content">
+      <div class="pass-container">
+        <!-- ======= Student Pass Section ======= -->
+        <div id="student-pass" class="pass-box student-pass">
+          <div class="pass-logo student-logo"></div>
+          <h2 id="student">Pass</h2>
+          <br>
+          <i class="fa fa-pencil-square-o" aria-hidden="true" ></i><br><br>
+
+          <a href="{%url 'student'%}" class="btn btn-outline-secondary">Get Pass</a>
+        </div>
+
+        <!-- End Student Pass Section -->
+
+        <!-- citizen Pass Section -->
+
+        <!--End of citizen pass -->
+  </section>
+  <!-- End Hero -->
+  </div>
+  <main id="main">
+
+  </main><!-- End #main -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>smart bus pass</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="#">Alex Corporation</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+
+  <!-- Vendor JS Files -->
+  <script src="{%static 'vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{%static 'vendor/aos/aos.js'%}"></script>
+  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{%static 'vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{%static 'vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{%static 'vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{%static 'vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{%static 'js/main.js'%}"></script>
+
+</body>
+
+</html>

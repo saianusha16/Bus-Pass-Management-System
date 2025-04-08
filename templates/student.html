@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Register</title>
+    <link rel="stylesheet" href="{% static 'css/studentbutton.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 40px;
+            border: none;
+            border-radius: 10px;
+            width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <img src="{% static 'img/CBIT3.JPG' %}" alt="Smart Bus Pass" class="navbar-icon">
+        <h2 class="navbar-title"><a href="{% url 'base' %}">SMART BUS PASS</a></h2>
+        <a href="{% url 'base' %}" class="home">HOME</a>
+    </div>
+
+    <div class="container">
+        <h1>Welcome To Students Pass Services</h1>
+        <div class="message-container">
+            <p class="message message-login">
+                If you already have an account, please click on <strong>"Login"</strong>.
+            </p>
+            <p class="message message-register">
+                If you don’t have an account, click on <strong>"Register"</strong> to create an account.
+            </p>
+        </div>
+        <div class="button-container">
+            <button id="loginBtn" class="button">Login</button>
+            <a href="{% url 'registercheck' %}" class="button">Register</a>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form action="{% url 'UserLoginCheck' %}" method="post">
+                {% csrf_token %}
+                <div class="input-container">
+                    <i class="icon fas fa-envelope"></i>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" required>
+                </div>
+                <div class="input-container">
+                    <i class="icon fas fa-lock"></i>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="pswd" placeholder="Enter Password" required>
+                    <i class="show-password fas fa-eye" id="togglePassword"></i>
+                </div>
+                <button type="submit" class="button">LOGIN</button>
+            </form>
+
+            <div class="footer-links">
+                <p><a href="{% url 'registercheck' %}">Didn’t have an account? Click Here To Register</a></p>
+                <p><a href="{% url 'forgot_password' %}">Forgot Password?</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <span>&copy; Smart Bus Pass. All rights reserved.</span>
+    </footer>
+
+    <script>
+        var modal = document.getElementById("loginModal");
+        var loginBtn = document.getElementById("loginBtn");
+        var closeBtn = document.getElementsByClassName("close")[0];
+        var passwordInput = document.getElementById("password");
+        var emailInput = document.getElementById("email");
+        var togglePassword = document.getElementById("togglePassword");
+
+        loginBtn.onclick = function () {
+            modal.style.display = "block";
+            emailInput.value = '';
+            passwordInput.value = '';
+        }
+
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        togglePassword.onclick = function () {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            this.classList.toggle("active");
+        }
+    </script>
+</body>
+
+</html>

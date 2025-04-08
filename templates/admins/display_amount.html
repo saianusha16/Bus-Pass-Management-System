@@ -1,0 +1,75 @@
+<div
+    style="font-family: Arial, sans-serif; width: 700px; margin: 0 auto; border: 1px solid #ddd; background-color: #ffffff;">
+    <div style="padding: 20px; border-bottom: 2px solid #007bff;">
+        <h2 style="font-size: 18px; color: #007bff; margin: 0; font-weight: bold;">Payment</h2>
+    </div>
+
+    <div style="padding: 20px;">
+
+
+        <!-- Application Details -->
+        <table style="width: 100%; margin-top: 20px; font-size: 14px;">
+            <tr>
+                <td style="font-weight: bold; color: #555;">Application Number</td>
+                <td>{{ application_number }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Pass Validity</td>
+                <td>Valid till: {{ pass_valid_upto }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Applied On</td>
+                <td>{{ pass_applied_date }}</td>
+            </tr>
+        </table>
+        <!-- Route Details -->
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr>
+                <td style="font-weight: bold; color: #555;">From</td>
+                <td>{{ route_selection.route.start_point }}</td>
+                <td style="font-weight: bold; color: #555;">To</td>
+                <td>{{ route_selection.route.end_point }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Distance</td>
+                <td>{{ route_selection.route.distance }} km</td>
+                <td style="font-weight: bold; color: #555;">Fare</td>
+                <td>₹{{ route_selection.fare_amount }}</td>
+            </tr>
+        </table>
+
+        <!-- Status -->
+        <div
+            style="margin-top: 20px; padding: 10px; border: 1px solid #ddd; background-color: #f8d7da; color: #842029; font-weight: bold; text-align: center;">
+            Application Status: {{ application_status }}
+        </div>
+
+        <div
+            style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f8d7da; color: #842029; font-weight: bold; text-align: center;">
+            Payment Status: {{ payment_status }}
+        </div>
+
+        <!-- QR Code -->
+        <div style="margin-top: 20px; text-align: center;">
+            <h3 style="font-size: 16px; color: #555;">QR Code</h3>
+            <img src="{{ qr_code.url }}" alt="QR Code"
+                style="border: 1px solid #ddd; padding: 5px; width: 120px; height: 120px;">
+        </div>
+
+        <!-- Payment Section -->
+        <div style="margin-top: 20px; padding: 15px; border-top: 2px solid #007bff;">
+            <h2 style="font-size: 16px; color: #333;">Total Amount: ₹{{ route_selection.fare_amount }}</h2>
+            <p style="font-size: 14px; color: #555;">Please proceed with the payment to complete your bus pass
+                application.</p>
+            <div style="text-align: center;">
+                <a href="{% url 'payment_gateway' route_selection.id %}" id="payNowBtn"
+                    style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; font-size: 14px; cursor: pointer; border-radius: 5px; text-decoration: none;">
+                    Pay Now
+                </a>
+            </div>
+        </div>
+
+        <!-- Download PDF Button -->
+        
+    </div>
+</div>

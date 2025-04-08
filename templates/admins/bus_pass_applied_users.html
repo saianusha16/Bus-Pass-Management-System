@@ -1,0 +1,269 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUS PASS  APPLIES</title>
+    <link rel="stylesheet" href="{% static 'css/studentregistration.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .navbar img {
+            width: 50px;
+            margin-right: 20px;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .navbar .logout {
+            margin-left: auto;
+            text-decoration: none;
+            color: #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logout:hover {
+            background-color: #d6d8db;
+        }
+
+        .welcome-message {
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+        .button {
+            text-decoration: none;
+            color: #333;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 120px;
+            text-align: center;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            background-color: #e2e6ea;
+        }
+
+        .button i {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Table Styling */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #4CAF50;
+            color: black;
+        }
+
+        th {
+            text-align: center;
+            padding: 12px 15px;
+            font-weight: bold;
+        }
+
+        td {
+            text-align: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .pagination .step-links a {
+            text-decoration: none;
+            color: #4CAF50;
+            margin: 0 5px;
+            font-weight: bold;
+        }
+
+        .pagination .step-links .current {
+            margin: 0 5px;  
+            font-weight: bold;
+            color: #388E3C;
+        }
+
+        .no-data {
+            text-align: center;
+            font-size: 16px;
+            color: #888;
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccc;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <img src="{% static 'img/CBIT3.JPG' %}" alt="Smart Bus Pass" class="navbar-icon">
+        <h2 class="navbar-title"><a href="{% url 'base' %}">SMART BUS PASS</a></h2>
+        <div class="welcome-message">
+            {% if user_name %}
+            <span class="highlighted-email">Welcome, {{ user_name }}!</span><br>
+            {% else %}
+            <span>Please log in</span>
+            {% endif %}
+        </div>
+        <a href="{% url 'logoutfun' %}" class="logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+
+    <!-- Admin Home Content -->
+    <div class="container mt-4" style="text-align: center;">
+        <h2>Welcome To Admin Home Page</h2>
+        <div class="button-container">
+            <a href="{% url 'AdminHome' %}" class="button">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+            <a href="{% url 'RegisterUsersView' %}" class="button">
+                <i class="fas fa-address-card"></i>
+                Registered Users
+            </a>
+            <a href="{%url 'add_route'%}" class="button">
+                <i class="fas fa-route"></i>
+                Add Routes
+            </a>
+            <a href="{%url 'viewroutes'%}" class="button">
+                <i class="fas fa-list "></i>
+                ROUTES LIST
+            </a>
+            <a href="{%url 'bus_pass_applied_users'%}" class="button">
+                <i class="fas fa-list "></i>
+                Bus Pass Applications
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <h1 style="text-align: center; margin-top: 30px;">Bus Pass Applied Users</h1>
+    <div class="container">
+        <div class="search-container" style="text-align: center; margin-top: 20px;">
+            <form method="get" action="">
+                <input type="text" name="search" placeholder="Search by Name, Email, or Mobile"
+                    value="{{ request.GET.search }}" style="padding: 10px; width: 250px; margin-right: 10px;">
+                <button type="submit"
+                    style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Search</button>
+            </form>
+        </div>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>S.NO</th>
+                    <th>Application Number</th>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Route</th>
+                    <th>Pass Type</th>
+                    <th>Fare Amount</th>
+                    <th>Valid Upto</th>
+                    <th>Payment Status</th>
+                    
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ app.application_number }}</td>
+                    <td>{{ app.applicant.name }}</td>
+                    <td>{{ app.applicant.email }}</td>
+                    <td>{{ app.route.start_point }} - {{ app.route.end_point }}</td>
+                    <td>{{ app.pass_type }}</td>
+                    <td>{{ app.fare_amount }}</td>
+                    <td>{{ app.pass_valid_upto }}</td>
+                    <td>{{ app.payment_status }}</td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">No bus pass applications found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if applications.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ applications.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ applications.number }} of {{ applications.paginator.num_pages }}.
+                </span>
+
+                {% if applications.has_next %}
+                <a href="?page={{ applications.next_page_number }}">next</a>
+                <a href="?page={{ applications.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <span>&copy; Smart Bus Pass. All rights reserved.</span>
+        </footer>
+</body>
+
+</html>

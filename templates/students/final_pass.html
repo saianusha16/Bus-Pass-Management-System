@@ -1,0 +1,213 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Pass</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+        }
+        h1 {
+            font-size: 32px;
+            color: #28a745;
+            text-align: center;
+            margin-bottom: 20px; /* Reduced margin */
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -15px; /* Increased space between h1 and line */
+            width: 100%;
+            height: 2px;
+            background-color: #a3d8a3; /* Lighter green color */
+        }
+        .details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .details-left {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .profile-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid linear-gradient(135deg, #ff5f6d, #ffc371); /* Gradient border */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            object-fit: cover;
+            margin-left: 30px;
+            position: relative;
+            overflow: hidden; /* Ensures the image is clipped to the circular border */
+            transition: all 0.4s ease-in-out;
+        }
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .profile-image:hover::after {
+            opacity: 1;
+        }
+        .profile-image:hover {
+            transform: scale(1.15) rotate(5deg); /* Rotate and scale effect */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+            border-color: #007bff; /* Change border color on hover */
+        }
+        .details p, .payment-info p {
+            margin: 12px 0;
+        }
+        .highlighted-value {
+            font-weight: bold;
+            color: #007bff;
+            background-color: #e7f3fe;
+            padding: 6px;
+            border-radius: 6px;
+        }
+        .payment-status {
+            background-color: #eaf0e4;
+            color: #28a745;
+            font-weight: bold;
+            padding: 15px; /* Reduced padding */
+            text-align: center;
+            margin-top: 20px; /* Reduced margin-top */
+            border-radius: 8px;
+            font-size: 18px; /* Reduced font size */
+        }
+        .qr-code {
+            width: 140px;
+            height: 140px;
+            margin-top: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .instructions h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #007bff;
+            font-weight: 600;
+        }
+        .instructions ul {
+            padding-left: 25px;
+            margin-top: 15px;
+        }
+        .instructions li {
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .download-button {
+            display: block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }   
+        .download-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+        .download-button:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Bus Pass</h1>
+
+        <!-- Application Details -->
+        <div class="details">
+            <div class="details-left">
+                <p><strong>Applicant Name:</strong> {{ route_selection.applicant.name }}</p>
+                <p><strong>Application Number:</strong> <span class="highlighted-value">{{ route_selection.application_number }}</span></p>
+                <p><strong>Fare Amount:</strong> ₹{{ route_selection.fare_amount }}</p>
+                <p><strong>Expires On:</strong> <span class="highlighted-value">Valid till: {{ route_selection.pass_valid_upto }}</span></p>
+                <p><strong>Applied On:</strong> {{ route_selection.pass_applied_date }}</p>
+            </div>
+            <!-- Profile Image Section -->
+            <div>
+                <img src="{{ photo_url }}"  alt="Profile Image" class="profile-image">
+            </div>
+        </div>
+
+        <!-- Payment Status -->
+        <div class="payment-status">
+            <h2>Payment Status: Successful</h2>
+            <p><strong>Paid Amount:</strong> ₹{{ route_selection.fare_amount }}</p>
+        </div>
+
+        <!-- QR Code -->
+        <div>
+            <img src="{{ qr_code_url }}" alt="QR Code" class="qr-code">
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="instructions">
+            <h3>Important Instructions:</h3>
+            <ul>
+                <li>Ensure you carry this receipt with you while traveling.</li>
+                <li>Present your QR code to board the bus.</li>
+                <li>The pass is valid as per the mentioned validity date.</li>
+                <li>If you have any queries, please contact our customer service.</li>
+            </ul>
+        </div>
+
+        <!-- Download PDF Button -->
+        {% if not is_pdf %}
+        <a href="{% url 'generate_pdf' route_selection.id %}" class="download-button">Download Pass</a>
+        <a href="{% url 'userhome' %}" class="download-button">BACK TO HOME</a>
+
+    {% endif %}
+    </div>
+</body>
+</html>

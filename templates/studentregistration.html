@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SMART BUS | REGISTRATION</title>
+    <link rel="stylesheet" href="{% static 'css/studentregistration.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .footer-links a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #0056b3;
+            text-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'base' %}">
+                <img src="{% static 'img/CBIT3.JPG' %}" alt="Smart Bus Pass" class="navbar-icon" style="width: 40px; height: auto;">
+                SMART BUS PASS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'base' %}">HOME</a>
+                        <a class="nav-link" href="{% url 'UserLoginCheck' %}">USER-LOGIN</a>
+                        <a class="nav-link" href="{% url 'AdminLogin' %}">ADMIN-LOGIN</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_name" class="form-label">Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    {{ form.name }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    {{ form.password }}
+                    <span class="input-group-text" style="cursor:pointer;" onmousedown="showPassword('id_password')"
+                        onmouseup="hidePassword('id_password')" onmouseleave="hidePassword('id_password')">
+                        <i class="fa fa-eye-slash" id="eye-password"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_confirm_password" class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    {{ form.confirm_password }}
+                    <span class="input-group-text" style="cursor:pointer;"
+                        onmousedown="showPassword('id_confirm_password')"
+                        onmouseup="hidePassword('id_confirm_password')"
+                        onmouseleave="hidePassword('id_confirm_password')">
+                        <i class="fa fa-eye-slash" id="eye-confirm-password"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_mobile" class="form-label">Mobile Number</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                    {{ form.mobile }}
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <div class="input-group">
+                    {{ form.status }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+        </form>
+
+        <div class="alert alert-info mt-3">
+            <strong>Already registered?</strong> Click <a href="{% url 'UserLoginCheck' %}" class="highlight">here</a> to log in.
+        </div>
+    </div>
+
+    <footer class="footer">
+        <span>&copy; Smart Bus Pass. All rights reserved.</span>
+    </footer>
+
+    <script>
+        function showPassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.type = "text";
+        }
+
+        function hidePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.type = "password";
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

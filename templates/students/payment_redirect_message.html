@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .timer {
+            font-size: 24px;
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var countdownTime = 10;  // Set the initial countdown time in seconds
+            var countdownElement = document.getElementById("countdown");
+
+            // Update countdown every second
+            var countdownInterval = setInterval(function() {
+                countdownTime--;
+                countdownElement.textContent = countdownTime + " seconds";  // Display the remaining time
+
+                // When the countdown reaches 0, stop the timer and redirect
+                if (countdownTime <= 0) {
+                    clearInterval(countdownInterval);  // Stop the countdown
+                    window.location.href = "{{ redirect_url }}";  // Redirect after countdown ends
+                }
+            }, 1000); // Update every second (1000 milliseconds)
+        };
+    </script>
+</head>
+<body>
+    <h1>Thank you, {{ applicant_name }}!</h1>
+    <p>Your payment was successful and your bus pass application has been created.</p>
+    <p>You will be redirected to the final page in <span id="countdown" class="timer">10 seconds</span>.</p>
+    <p>If you are not redirected, <a href="{{ redirect_url }}">click here</a>.</p>
+</body>
+</html>

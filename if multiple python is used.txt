@@ -1,0 +1,6 @@
+1. py -3.8 -m pip install virtualenv
+2. py -3.8 -m venv myenv
+3. myenv\scripts\activate
+4. if any pip module is not found
+5. python -m pip install --upgrade pip
+6. now we can download any dependencys
